@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MarkdownReader.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MarkdownReader"
+    Title="MarkdownReader">
+
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal" VerticalOptions="Center" Spacing="0">
+            <!-- Logo Image -->
+            <Image Source="logo.png" WidthRequest="70" HeightRequest="70" />
+
+            <!-- Title Text -->
+            <Label Text="Cerebron" VerticalTextAlignment="Center" FontSize="Large" FontAttributes="Bold" FontFamily="YourSophisticatedFontFamily" TextColor="#B19CD9" Margin="0,10,0,20"/>
+        </StackLayout>
+    </Shell.TitleView>
+
+    <ShellContent
+        Title="Cerebron"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
+
+</Shell>

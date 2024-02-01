@@ -1,0 +1,212 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MarkdownReader"
+             x:Class="MarkdownReader.MainPage">
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+            <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <Grid x:Name="MainGrid" Padding="10" ColumnSpacing="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.05*"/>
+            <ColumnDefinition Width="{Binding FilePanelWidth}"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="{Binding ReadingPanelWidth}"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.GestureRecognizers>
+            <PanGestureRecognizer PanUpdated="OnPanUpdated"/>
+        </Grid.GestureRecognizers>
+
+
+        <!-- Icon Side Panel -->
+        <Frame x:Name="IconSidePanel"
+       CornerRadius="10"
+       Grid.Column="0"
+       BackgroundColor="{StaticResource YourBackgroundColorResource}"
+       BorderColor="{StaticResource YourPurpleColorResource}">
+            <StackLayout Spacing="20">
+                <Grid>
+                    <Image x:Name="ToggleImage" Source="left.png" WidthRequest="30" HeightRequest="30"/>
+                   
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ToggleFilesPanelButton_Clicked"/>
+                    </Grid.GestureRecognizers>
+                </Grid>
+
+                <!-- Custom layout for 'Open Markdown File' -->
+                <Grid x:Name="OpenFileButton" 
+              BackgroundColor="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OpenFile_Click"/>
+                    </Grid.GestureRecognizers>
+                    <Image Source="folder.png" 
+                   WidthRequest="50" 
+                   HeightRequest="50" 
+                   Grid.Column="0"/>
+                </Grid>
+
+
+
+                <!-- Custom layout for 'Open Markdown File' -->
+                <Grid x:Name="OpenFileButton1" 
+              BackgroundColor="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OpenFile_Click"/>
+                    </Grid.GestureRecognizers>
+                    <Image Source="icon_1.png" 
+                   WidthRequest="50" 
+                   HeightRequest="50" 
+                   Grid.Column="0"/>
+                </Grid>
+
+
+                <!-- Custom layout for 'Open Markdown File' -->
+                <Grid x:Name="OpenFileButton2" 
+              BackgroundColor="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OpenFile_Click"/>
+                    </Grid.GestureRecognizers>
+                    <Image Source="icon_2.png" 
+                   WidthRequest="50" 
+                   HeightRequest="50" 
+                   Grid.Column="0"/>
+                </Grid>
+
+                <!-- Custom layout for 'Open Markdown File' -->
+                <Grid x:Name="OpenFileButton3" 
+              BackgroundColor="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OpenFile_Click"/>
+                    </Grid.GestureRecognizers>
+                    <Image Source="icon_3.png" 
+                   WidthRequest="50" 
+                   HeightRequest="50" 
+                   Grid.Column="0"/>
+                </Grid>
+
+
+                <!-- Custom layout for 'Open Markdown File' -->
+        <Grid x:Name="OpenFileButton4" 
+              BackgroundColor="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.GestureRecognizers>
+               <TapGestureRecognizer Tapped="OpenFile_Click"/>
+            </Grid.GestureRecognizers>
+            <Image Source="icon_4.png" 
+                   WidthRequest="50" 
+                   HeightRequest="50" 
+                   Grid.Column="0"/>
+            </Grid>
+         </StackLayout>
+     </Frame>
+
+
+        <!-- Save Button -->
+        <Button x:Name="SaveButton"
+            Clicked="SaveFile_Click"
+            WidthRequest="50"
+            HeightRequest="50"
+            BackgroundColor="Transparent"
+            HorizontalOptions="End"
+            VerticalOptions="Start"
+            BorderWidth="0"
+            Grid.Column="1">
+            <Button.ImageSource>
+                <FileImageSource File="C:\Users\lukel\source\repos\MarkdownReader\Resources\Images\disk_icon.png"/>
+            </Button.ImageSource>
+        </Button>
+
+
+        <!-- Side Panel -->
+        <Frame x:Name="SidePanel"
+               CornerRadius="10"
+               Grid.Column="1"
+               BackgroundColor="{StaticResource YourBackgroundColorResource}" 
+               BorderColor="{StaticResource YourPurpleColorResource}" 
+               IsVisible="{Binding IsSidePanelVisible}">
+            <StackLayout>
+                <Label Text="Files" TextColor="White" FontSize="20" HorizontalOptions="Center" />
+                <ListView x:Name="FileListView" ItemTapped="FileListView_ItemTapped">
+                    <!-- Item template -->
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding}" TextColor="White" />
+                                    <Image Source="rename_icon.png" HeightRequest="20" WidthRequest="20">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="RenameFile_Tapped" CommandParameter="{Binding .}" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </Frame>
+
+
+        <Grid x:Name="DragHandle" Grid.Column="2">
+            <!-- Removed PanGestureRecognizer from here -->
+            <BoxView x:Name="DragHandle1"
+                 VerticalOptions="Center" 
+                 HorizontalOptions="Center" 
+                 CornerRadius="0"/>
+        </Grid>
+
+
+
+
+        <!-- Reading Pane and Editor -->
+        <Grid Grid.Column="3" VerticalOptions="FillAndExpand" BackgroundColor="Transparent">
+            <ScrollView VerticalOptions="FillAndExpand" BackgroundColor="Transparent">
+                <StackLayout>
+                    <local:TabControl x:Name="DocumentTabs"/>
+                    <Editor x:Name="MarkdownEditor"
+                        BackgroundColor="Transparent" 
+                        TextColor="White"
+                        FontFamily="YourMonospaceFont"
+                        VerticalOptions="FillAndExpand"
+                        Text="{Binding MarkdownContent}"
+                        IsVisible="{Binding IsEditing}"/>
+
+                    <WebView x:Name="MarkdownWebView"
+                         VerticalOptions="FillAndExpand"
+                         Source="{Binding HtmlSource}"
+                         IsVisible="{Binding IsPreviewModeEnabled}"
+                         Navigating="WebView_OnNavigating"/>
+
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+
+
+    </Grid>
+</ContentPage>
